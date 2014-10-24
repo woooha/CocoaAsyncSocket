@@ -61,6 +61,8 @@ typedef enum AsyncUdpSocketError AsyncUdpSocketError;
 	UInt32 maxReceiveBufferSize;
 }
 
+@property (nonatomic) CFSocketRef socketRef;
+
 /**
  * Creates new instances of AsyncUdpSocket.
 **/
@@ -311,6 +313,10 @@ typedef enum AsyncUdpSocketError AsyncUdpSocketError;
 **/
 - (NSArray *)runLoopModes;
 
+- (BOOL) enableMulticastLoop:(BOOL) enable;
+- (BOOL) bindMulticastInterfaceAddr: (struct in_addr) ifAddr;
+- (struct in_addr) usingInterfaceAddr;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,5 +372,4 @@ typedef enum AsyncUdpSocketError AsyncUdpSocketError;
  * A socket is only closed if you explicitly call one of the close methods.
 **/
 - (void)onUdpSocketDidClose:(AsyncUdpSocket *)sock;
-
 @end
