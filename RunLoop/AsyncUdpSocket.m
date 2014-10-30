@@ -2315,7 +2315,7 @@ static void MyCFSocketCallback(CFSocketRef sref, CFSocketCallBackType type, CFDa
 }
 
 - (BOOL) enableMulticastLoop:(BOOL) enable {
-    u_char shouldLoop = enable : 1 : 0;
+    u_char shouldLoop = enable?1:0;
     return setsockopt( CFSocketGetNative(theSocket4), IPPROTO_IP, IP_MULTICAST_LOOP, &shouldLoop, sizeof(shouldLoop)) != -1;
 }
 
@@ -2335,23 +2335,18 @@ static void MyCFSocketCallback(CFSocketRef sref, CFSocketCallBackType type, CFDa
         if( addr->ifa_addr->sa_family != AF_INET ){
             continue;
         }
-
         // 如果有 bridge100 说明热点开启了,使用这个网卡
         if ( [[NSString stringWithUTF8String:addr->ifa_name] isEqualToString:@"bridge100"] ) {
-            interfaceAddr.s_addr = ((struct sockaddr_in *)addr->ifa_addr).s_addr;
+            interfaceAddr.s_addr = ((struct sockaddr_in *)addr->ifa_addr)->sin_addr.s_addr;
             break;
         }
-
         // 否则使用 en0 网卡
         if ( [[NSString stringWithUTF8String:addr->ifa_name] isEqualToString:@"en0"] ) {
-            interfaceAddr.s_addr = ((struct sockaddr_in *)addr->ifa_addr).s_addr;
+            interfaceAddr.s_addr = ((struct sockaddr_in *)addr->ifa_addr)->sin_addr.s_addr;
         }
-
         ifIdx++;
     }
     freeifaddrs(interfaces);
-
     return interfaceAddr;
 }
-
 @end
