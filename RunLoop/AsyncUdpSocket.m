@@ -2345,7 +2345,6 @@ static void MyCFSocketCallback(CFSocketRef sref, CFSocketCallBackType type, CFDa
         if ( [[NSString stringWithUTF8String:addr->ifa_name] isEqualToString:@"en0"] ) {
             interfaceAddr.s_addr = ((struct sockaddr_in *)addr->ifa_addr)->sin_addr.s_addr;
         }
-        ifIdx++;
     }
     freeifaddrs(interfaces);
     return interfaceAddr;
