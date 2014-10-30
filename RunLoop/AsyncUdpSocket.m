@@ -20,6 +20,7 @@
 #import <sys/ioctl.h>
 #import <net/if.h>
 #import <netdb.h>
+#import <ifaddrs.h>
 
 #if TARGET_OS_IPHONE
 // Note: You may need to add the CFNetwork Framework to your project
